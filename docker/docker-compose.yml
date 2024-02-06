@@ -17,13 +17,15 @@ services:
     image: redis:alpine
 
   frappe:
-    image: frappe/bench:latest
-    command: bash /workspace/init.sh
+    image: ahrechanychenko/course-project-lms:poc
+    command: bash entrypoint.sh 123
     environment:
       - SHELL=/bin/bash
-    working_dir: /home/frappe
+    working_dir: /usr/app/lms
     volumes:
-      - .:/workspace
+      - type: bind
+        source: ./entrypoint.sh
+        target: /usr/app/lms/entrypoint.sh
     ports:
       - 8000:8000
       - 9000:9000
