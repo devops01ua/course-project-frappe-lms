@@ -9,7 +9,7 @@ env:
   IMAGE: lms
 
 jobs:
-  setup-build-publish-deploy:
+  setup-build-publish:
     name: Docker Build & Docker push
     runs-on: ubuntu-latest
 
@@ -40,3 +40,14 @@ jobs:
     - name: Publish
       run: |-
         docker push ahrechanychenko/course-project-lms:${{ env.tag }}
+
+  deploy:
+    name: test deploy
+    runs-on: ubuntu-latest
+    on: workflow_dispatch
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: test manual approve
+      run: echo "this is a test"
