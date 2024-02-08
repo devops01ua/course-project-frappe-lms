@@ -28,8 +28,8 @@ jobs:
     - name: set image version
       run: echo tag=$(echo $GITHUB_SHA | cut -c1-5) >> GITHUB_ENV
 
-    - name: checl version variable
-      run: echo ${{ env.tag }}
+    - name: check version variable
+      run: echo '${{ env.tag }}'
 
 #    - name: Build
 #      run: |-
