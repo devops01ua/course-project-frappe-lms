@@ -11,4 +11,3 @@ WORKDIR /usr/app/lms
 COPY docker/init.sh .
 
 RUN bash init.sh $DB_HOST $REDIS_HOST $DB_PASS $LMS_BRANCH_NAME $LMS_REPO_URL
-
