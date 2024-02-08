@@ -8,7 +8,6 @@ on:
     branches:
       - develop
 
-
 env:
   IMAGE: lms
 
