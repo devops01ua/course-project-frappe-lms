@@ -10,14 +10,14 @@ env:
 
 jobs:
   setup-build-publish-deploy:
-    name: Setup, Build, Publish, and Deploy
+    name: Docker Build & Docker push
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Login to GitLab
+    - name: Login to DockerHub
       uses: docker/login-action@v3
       with:
         username: ${{ secrets.DOCKERHUB_USER }}
@@ -32,7 +32,6 @@ jobs:
           --build-arg=DB_PASS=${{ secrets.DB_PASS }}  \
           --build-arg LMS_BRANCH_NAME=develop \
           --build-arg LMS_REPO_URL=https://github.com/devops01ua/course-project-frappe-lms  .
-          .
     # Push the Docker image to Google Artifact Registry
     - name: Publish
       run: |-
