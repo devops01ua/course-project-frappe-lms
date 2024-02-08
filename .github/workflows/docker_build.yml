@@ -28,18 +28,15 @@ jobs:
     - name: set image version
       run: echo tag=$(echo $GITHUB_SHA | cut -c1-5) >> $GITHUB_ENV
 
-    - name: check version variable
-      run: echo '${{ env.tag }}'
-
-#    - name: Build
-#      run: |-
-#        docker build -t ahrechanychenko/course-project-lms:$tag \
-#          --build-arg DB_HOST=mariadb \
-#          --build-arg REDIS_HOST=redis \
-#          --build-arg=DB_PASS=${{ secrets.DB_PASS }}  \
-#          --build-arg LMS_BRANCH_NAME=develop \
-#          --build-arg LMS_REPO_URL=https://github.com/devops01ua/course-project-frappe-lms  .
-#    # Push the Docker image to Google Artifact Registry
-#    - name: Publish
-#      run: |-
-#        docker push ahrechanychenko/course-project-lms:$tag
+    - name: Build
+      run: |-
+        docker build -t ahrechanychenko/course-project-lms:${{ env.tag }} \
+          --build-arg DB_HOST=mariadb \
+          --build-arg REDIS_HOST=redis \
+          --build-arg=DB_PASS=${{ secrets.DB_PASS }}  \
+          --build-arg LMS_BRANCH_NAME=develop \
+          --build-arg LMS_REPO_URL=https://github.com/devops01ua/course-project-frappe-lms  .
+    # Push the Docker image to Google Artifact Registry
+    - name: Publish
+      run: |-
+        docker push ahrechanychenko/course-project-lms:${{ env.tag }}
