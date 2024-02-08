@@ -29,7 +29,7 @@ jobs:
       run: echo tag=$(echo $GITHUB_SHA | cut -c1-5) >> GITHUB_ENV
 
     - name: checl version variable
-      run: echo $tag
+      run: echo ${{ env.tag }}
 
 #    - name: Build
 #      run: |-
