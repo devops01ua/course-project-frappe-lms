@@ -26,7 +26,7 @@ jobs:
     # Build the Docker image
 
     - name: set image version
-      run: echo tag=$(echo $GITHUB_SHA | cut -c1-5) >> GITHUB_ENV
+      run: echo tag=$(echo $GITHUB_SHA | cut -c1-5) >> $GITHUB_ENV
 
     - name: check version variable
       run: echo '${{ env.tag }}'
