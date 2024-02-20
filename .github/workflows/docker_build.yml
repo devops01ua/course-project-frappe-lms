@@ -1,0 +1,42 @@
+#ustomize
+name: Build and push to Dockerhub
+
+on:
+  push:
+    branches: [ "develop" ]
+
+env:
+  IMAGE: lms
+
+jobs:
+  setup-build-publish:
+    name: Docker Build & Docker push
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USER }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+    # Build the Docker image
+
+    - name: set image version
+      run: echo tag=$(echo $GITHUB_SHA | cut -c1-5) >> $GITHUB_ENV
+
+    - name: Build
+      run: |-
+        docker build -t ahrechanychenko/course-project-lms:${{ env.tag }} \
+          --build-arg DB_HOST=${{ secrets.DB_HOST }} \
+          --build-arg REDIS_HOST=${{ secrets.REDIS_HOST }} \
+          --build-arg=DB_PASS=${{ secrets.DB_PASS }}  \
+          --build-arg LMS_BRANCH_NAME=develop \
+          --build-arg LMS_REPO_URL=https://github.com/devops01ua/course-project-frappe-lms  .
+    # Push the Docker image to Google Artifact Registry
+    - name: Publish
+      run: |-
+        docker push ahrechanychenko/course-project-lms:${{ env.tag }}
